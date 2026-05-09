@@ -10,7 +10,8 @@ ENV GITHUB_TOKEN=${GITHUB_TOKEN}
 COPY pom.xml .
 COPY settings-docker.xml .
 
-RUN mvn dependency:go-offline -B -s settings-docker.xml
+RUN --mount=type=cache,target=/root/.m2  \
+    mvn dependency:go-offline -B -s settings-docker.xml
 
 COPY src ./src
 
