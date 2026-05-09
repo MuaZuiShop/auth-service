@@ -1,0 +1,10 @@
+# Bỏ qua thư mục target do Maven sinh ra
+^.*target/.*$
+
+# Bỏ qua toàn bộ thư mục test
+^.*src/test/.*$
+
+# Bỏ qua các file tài liệu hoặc cấu hình IDE
+^.*\.md$
+^.*\.idea/.*$
+^.*\.gitignore$

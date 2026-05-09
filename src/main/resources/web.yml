@@ -1,0 +1,11 @@
+server:
+  port: ${APP_PORT:0}
+  servlet:
+    context-path: ${CONTEXT_PATH:/api/auth}
+
+springdoc:
+  api-docs:
+    enabled: true
+
+gateway:
+  url: http://localhost:8000${CONTEXT_PATH:/api/auth}
