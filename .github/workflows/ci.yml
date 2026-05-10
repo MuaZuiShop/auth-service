@@ -97,7 +97,7 @@ jobs:
           
           echo "Đã tìm thấy task $ISSUE_KEY. Bắt đầu gọi API Jira..."
           
-          TRANSITION_ID="3" 
+          TRANSITION_ID="7" 
           
           curl --request POST \
             --url "https://$JIRA_DOMAIN/rest/api/3/issue/$ISSUE_KEY/transitions" \
