@@ -56,3 +56,56 @@ jobs:
           path: |
             target/site/jacoco/
             target/spotbugsXml.xml
+            
+  update-jira:
+    name: Update Jira Status
+    needs: [ build, trufflehog ]
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Get Branch Name & Update Jira
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          JIRA_DOMAIN: ${{ secrets.JIRA_DOMAIN }}
+          JIRA_EMAIL: ${{ secrets.JIRA_EMAIL }}
+          JIRA_TOKEN: ${{ secrets.JIRA_TOKEN }}
+        run: |
+          BRANCH_NAME=$(gh pr list --search "${{ github.sha }}" --state merged --json headRefName --jq '.[0].headRefName')
+          
+          if [ -z "$BRANCH_NAME" ] || [ "$BRANCH_NAME" == "null" ]; then
+            PR_NUMBER=$(echo "${{ github.event.head_commit.message }}" | grep -oP '#\d+' | head -n 1 | tr -d '#')
+            if [ ! -z "$PR_NUMBER" ]; then
+              BRANCH_NAME=$(gh pr view "$PR_NUMBER" --json headRefName --jq '.headRefName')
+            fi
+          fi
+          
+          if [ -z "$BRANCH_NAME" ] || [ "$BRANCH_NAME" == "null" ]; then
+            echo "Không xác định được tên nhánh từ commit này (Không phải PR). Bỏ qua cập nhật Jira."
+            exit 0
+          fi
+          
+          echo "Nhánh gốc của PR là: $BRANCH_NAME"
+          
+          ISSUE_KEY=$(echo "$BRANCH_NAME" | grep -oP '[A-Z]+-\d+' | head -n 1)
+          
+          if [ -z "$ISSUE_KEY" ]; then
+            echo "Không tìm thấy mã Jira trong tên nhánh. Bỏ qua."
+            exit 0
+          fi
+          
+          echo "Đã tìm thấy task $ISSUE_KEY. Bắt đầu gọi API Jira..."
+          
+          TRANSITION_ID="3" 
+          
+          curl --request POST \
+            --url "https://$JIRA_DOMAIN/rest/api/3/issue/$ISSUE_KEY/transitions" \
+            --user "$JIRA_EMAIL:$JIRA_TOKEN" \
+            --header "Accept: application/json" \
+            --header "Content-Type: application/json" \
+            --data '{
+              "transition": {
+                "id": "'"$TRANSITION_ID"'"
+              }
+            }' -w "\nHTTP Status: %{http_code}\n"
