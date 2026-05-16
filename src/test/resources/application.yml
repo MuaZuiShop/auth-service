@@ -1,10 +1,20 @@
+spring:
+  application:
+    admin:
+      default:
+        username: admin
+        password: admin
+        email: admin@admin.com
+  cloud:
+    discovery:
+      enabled: false
+
 eureka:
   client:
     enabled: false
     register-with-eureka: false
     fetch-registry: false
 
-spring:
-  cloud:
-    discovery:
-      enabled: false
+logging:
+  level:
+    root: ${LOGGING_LEVEL:info}

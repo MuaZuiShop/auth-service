@@ -6,7 +6,8 @@
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
         <version>3.3.5</version>
-        <relativePath/> </parent>
+        <relativePath/>
+    </parent>
     <groupId>com.us.quy</groupId>
     <artifactId>auth-service</artifactId>
     <version>0.0.1-SNAPSHOT</version>
@@ -32,9 +33,11 @@
         <checkstyle.version>10.17.0</checkstyle.version>
         <checkstyle.check.skip>false</checkstyle.check.skip>
         <common-libraries.id>common-libraries</common-libraries.id>
-        <common-libraries.version>1.0.0</common-libraries.version>
+        <common-libraries.version>1.0.2</common-libraries.version>
         <common-libraries.url>https://maven.pkg.github.com/MuaZuiShop/common-libraries</common-libraries.url>
+        <mapstruct.version>1.5.5.Final</mapstruct.version>
     </properties>
+
     <dependencies>
         <dependency>
             <groupId>com.quy</groupId>
@@ -45,11 +48,21 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-jdbc</artifactId>
         </dependency>
-
         <dependency>
             <groupId>org.postgresql</groupId>
             <artifactId>postgresql</artifactId>
             <scope>runtime</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.instancio</groupId>
+            <artifactId>instancio-junit</artifactId>
+            <version>6.0.0-RC2</version>
+            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -61,7 +74,12 @@
             <artifactId>postgresql</artifactId>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>org.liquibase</groupId>
+            <artifactId>liquibase-core</artifactId>
+        </dependency>
     </dependencies>
+
     <dependencyManagement>
         <dependencies>
             <dependency>
@@ -88,9 +106,28 @@
                     </excludes>
                 </configuration>
             </plugin>
+
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <annotationProcessorPaths>
+                        <path>
+                            <groupId>org.projectlombok</groupId>
+                            <artifactId>lombok</artifactId>
+                        </path>
+                        <path>
+                            <groupId>org.projectlombok</groupId>
+                            <artifactId>lombok-mapstruct-binding</artifactId>
+                            <version>0.2.0</version>
+                        </path>
+                        <path>
+                            <groupId>org.mapstruct</groupId>
+                            <artifactId>mapstruct-processor</artifactId>
+                            <version>${mapstruct.version}</version>
+                        </path>
+                    </annotationProcessorPaths>
+                </configuration>
                 <executions>
                     <execution>
                         <id>default-compile</id>
@@ -98,14 +135,6 @@
                         <goals>
                             <goal>compile</goal>
                         </goals>
-                        <configuration>
-                            <annotationProcessorPaths>
-                                <path>
-                                    <groupId>org.projectlombok</groupId>
-                                    <artifactId>lombok</artifactId>
-                                </path>
-                            </annotationProcessorPaths>
-                        </configuration>
                     </execution>
                     <execution>
                         <id>default-testCompile</id>
@@ -113,17 +142,10 @@
                         <goals>
                             <goal>testCompile</goal>
                         </goals>
-                        <configuration>
-                            <annotationProcessorPaths>
-                                <path>
-                                    <groupId>org.projectlombok</groupId>
-                                    <artifactId>lombok</artifactId>
-                                </path>
-                            </annotationProcessorPaths>
-                        </configuration>
                     </execution>
                 </executions>
             </plugin>
+
             <plugin>
                 <groupId>org.jacoco</groupId>
                 <artifactId>jacoco-maven-plugin</artifactId>
@@ -150,14 +172,16 @@
                 </executions>
                 <configuration>
                     <excludes>
-                        <exclude>**/configs/**</exclude>
-                        <exclude>**/controller/**</exclude>
-                        <exclude>**/dto/**</exclude>
-                        <exclude>**/entity/**</exclude>
+                        <exclude>**/configurations/**</exclude>
+                        <exclude>**/controllers/**</exclude>
+                        <exclude>**/dtos/**</exclude>
+                        <exclude>**/entities/**</exclude>
+                        <exclude>**/enums/**</exclude>
+                        <exclude>**/exceptions/**</exclude>
+                        <exclude>**/kafka/**</exclude>
+                        <exclude>**/mapper/**</exclude>
+                        <exclude>**/repositories/**</exclude>
                         <exclude>**/utils/**</exclude>
-                        <exclude>**/enum/**</exclude>
-                        <exclude>**/exception/**</exclude>
-                        <exclude>**/repository/**</exclude>
                     </excludes>
                     <rules>
                         <rule>
@@ -202,6 +226,9 @@
                     <failOnViolation>true</failOnViolation>
                     <enableRulesSummary>false</enableRulesSummary>
                     <enableFilesSummary>false</enableFilesSummary>
+                    <sourceDirectories>
+                        <sourceDirectory>${project.build.sourceDirectory}</sourceDirectory>
+                    </sourceDirectories>
                 </configuration>
             </plugin>
 
@@ -225,6 +252,7 @@
             </plugin>
         </plugins>
     </build>
+
     <repositories>
         <repository>
             <id>spring-snapshots</id>
