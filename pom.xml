@@ -226,6 +226,9 @@
                     <failOnViolation>true</failOnViolation>
                     <enableRulesSummary>false</enableRulesSummary>
                     <enableFilesSummary>false</enableFilesSummary>
+                    <sourceDirectories>
+                        <sourceDirectory>${project.build.sourceDirectory}</sourceDirectory>
+                    </sourceDirectories>
                 </configuration>
             </plugin>
 

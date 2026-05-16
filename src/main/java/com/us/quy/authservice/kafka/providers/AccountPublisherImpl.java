@@ -15,7 +15,7 @@ public class AccountPublisherImpl implements AccountPublisher {
     @Override
     public void registerEvent(String topic, AccountEntity account) {
         RegisteredEventMessage message = RegisteredEventMessage.builder()
-            .eventType(EventType.ACCOUNT_REEGISTERED)
+            .eventType(EventType.ACCOUNT_REGISTERED)
             .data(RegisteredEventMessage.Account.builder()
                 .id(account.getId())
                 .email(account.getEmail())
