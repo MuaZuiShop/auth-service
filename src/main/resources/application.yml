@@ -1,12 +1,18 @@
 spring:
   application:
     name: auth-service
+    admin:
+      default:
+        username: admin
+        password: admin
+        email: admin@admin.com
   config:
     import:
     - optional:file:.env[.properties]
     - 'classpath:web.yml'
     - 'classpath:eureka.yml'
     - 'classpath:database.yml'
+    - 'classpath:kafka.yml'
 logging:
   level:
-    root: debug
+    root: ${LOGGING_LEVEL:info}

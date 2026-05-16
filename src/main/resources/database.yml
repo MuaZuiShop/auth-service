@@ -9,3 +9,8 @@ spring:
       ddl-auto: none
     show-sql: true
     database-platform: org.hibernate.dialect.PostgreSQLDialect
+  liquibase:
+    url: jdbc:postgresql://${DB_HOST:localhost}:${DB_PORT:5432}/${DB_NAME:postgres}
+    user: ${USER_DB:username}
+    password: ${PASSWORD_DB:password}
+    enabled: ${LIQUIBASE_ENABLED:false}
