@@ -1,6 +1,6 @@
 package com.us.quy.authservice.dtos;
 
-import com.us.quy.authservice.enums.ERole;
+import com.quy.common.core.security.ERole;
 import com.us.quy.authservice.enums.EStatus;
 import java.time.ZonedDateTime;
 import java.util.ArrayList;

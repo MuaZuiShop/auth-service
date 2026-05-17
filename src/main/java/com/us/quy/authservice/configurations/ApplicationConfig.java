@@ -1,10 +1,9 @@
 package com.us.quy.authservice.configurations;
 
+import com.quy.common.core.security.ERole;
 import com.us.quy.authservice.entities.AccountEntity;
-import com.us.quy.authservice.enums.ERole;
 import com.us.quy.authservice.enums.EStatus;
 import com.us.quy.authservice.repositories.AccountRepository;
-import java.util.Collections;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -13,6 +12,7 @@ import org.springframework.boot.ApplicationRunner;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -21,6 +21,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @Configuration
 @RequiredArgsConstructor
 @Slf4j
+@EnableAsync
 public class ApplicationConfig {
     @Value("${spring.application.admin.default.username}")
     private String adminUsername;

@@ -20,4 +20,8 @@ public enum EStatus {
             case DELETED -> false;
         };
     }
+
+    public static boolean canLogin(EStatus status) {
+        return status == ACTIVE || status == PENDING_UPDATE_INFO;
+    }
 }

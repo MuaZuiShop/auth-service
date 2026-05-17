@@ -14,3 +14,10 @@ spring:
     user: ${USER_DB:username}
     password: ${PASSWORD_DB:password}
     enabled: ${LIQUIBASE_ENABLED:false}
+
+  data:
+    redis:
+      host: ${REDIS_HOST:localhost}
+      port: ${REDIS_PORT:localhost}
+      database: 0
+      timeout: 60000

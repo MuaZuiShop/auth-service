@@ -1,9 +1,9 @@
 package com.us.quy.authservice.mapper;
 
+import com.quy.common.core.security.ERole;
 import com.us.quy.authservice.dtos.Account;
 import com.us.quy.authservice.dtos.AccountRegistrationRequest;
 import com.us.quy.authservice.entities.AccountEntity;
-import com.us.quy.authservice.enums.ERole;
 import com.us.quy.authservice.enums.EStatus;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
