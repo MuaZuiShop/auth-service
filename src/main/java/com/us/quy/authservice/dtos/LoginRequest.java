@@ -1,21 +1,17 @@
 package com.us.quy.authservice.dtos;
 
-import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter
 @Setter
-public class AccountRegistrationRequest {
+public class LoginRequest {
 
     @NotBlank(message = "Username không được để trống!")
     String username;
 
-    @ValidPassword
+    @NotBlank(message = "Mật khẩu không được để trống!")
     String password;
 
-    @NotBlank(message = "Email không được để trống!")
-    @Email(message = "Định dạng email không hợp lệ")
-    String email;
 }

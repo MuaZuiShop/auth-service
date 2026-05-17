@@ -17,4 +17,9 @@ eureka:
 
 logging:
   level:
-    root: ${LOGGING_LEVEL:info}
+    root: info
+
+jwt:
+  secret: defaultDevSecretKeyThatIsLongEnough_please_replace
+  access-exp: 900000
+  refresh-exp: 604800000

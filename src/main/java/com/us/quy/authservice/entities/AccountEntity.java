@@ -1,7 +1,7 @@
 package com.us.quy.authservice.entities;
 
-import com.quy.common.database.BaseEntity;
-import com.us.quy.authservice.enums.ERole;
+import com.quy.common.core.database.BaseEntity;
+import com.quy.common.core.security.ERole;
 import com.us.quy.authservice.enums.EStatus;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
